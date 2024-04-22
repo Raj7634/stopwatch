@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stopwatch</title>
+<style>
+    .container {
+        text-align: center;
+        margin-top: 50px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Stopwatch</h2>
+    <h1 id="display">00:00:00</h1>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="pauseStopwatch()">Pause</button>
+    <button onclick="resetStopwatch()">Reset</button>
+</div>
+
+<script>
+    let timer;
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
+
+    function startStopwatch() {
+        clearInterval(timer);
+        timer = setInterval(updateStopwatch, 1000);
+    }
+
+    function pauseStopwatch() {
+        clearInterval(timer);
+    }
+
+    function resetStopwatch() {
+        clearInterval(timer);
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+        updateDisplay();
+    }
+
+    function updateStopwatch() {
+        seconds++;
+        if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+        }
+        if (minutes === 60) {
+            minutes = 0;
+            hours++;
+        }
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        let displayString = "";
+
+        if (hours > 0) {
+            displayString += hours.toString().padStart(2, '0') + ":";
+        }
+
+        if (minutes > 0 || hours > 0) {
+            displayString += minutes.toString().padStart(2, '0') + ":";
+        }
+
+        displayString += seconds.toString().padStart(2, '0');
+
+        document.getElementById("display").innerText = displayString;
+    }
+</script>
+
+</body>
+</html>
